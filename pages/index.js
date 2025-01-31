@@ -1,114 +1,150 @@
-import Image from "next/image";
-import { Geist, Geist_Mono } from "next/font/google";
+'use client'
+import styled from 'styled-components';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, EffectCards } from 'swiper/modules';
+import { motion, AnimatePresence } from 'framer-motion';
+import { CardWrapper, CardContainer, CardContent, CardTitle, CardText } from '../styles/CardStyles';
+import Navbar from '../components/Navbar';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+// Swiper 스타일
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/effect-cards';
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// 새로 추가된 스타일 컴포넌트
+const HeroSection = styled.div`
+  width: 100%;
+  height: 33vh;
+  position: relative;
+  margin-bottom: 2rem;
+`;
+
+const HeroImage = styled.div`
+  width: 100%;
+  height: 100%;
+  background-image: url('/sunny-lake.jpg');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+`;
+
+const HeroText = styled.div`
+  position: absolute;
+  bottom: 2rem;
+  left: 2rem;
+  color: white;
+  font-size: 3rem;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+`;
+
+const cardData = [
+  {
+    id: 1,
+    title: "오늘의 뉴스",
+    content: "첫 번째 카드 뉴스 내용입니다.",
+    image: "/images/news1.jpg"
+  },
+  {
+    id: 2,
+    title: "주간 하이라이트",
+    content: "두 번째 카드 뉴스 내용입니다.",
+    image: "/images/news2.jpg"
+  },
+];
+
+const Hero = styled.div`
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 2rem;
+`;
+
+const Title = styled.h1`
+  font-size: 4rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+  
+  span {
+    font-family: serif;
+    font-style: italic;
+  }
+`;
+
+const Subtitle = styled.p`
+  font-size: 1.2rem;
+  color: #888;
+  max-width: 600px;
+  margin-bottom: 2rem;
+`;
+
+const ButtonGroup = styled.div`
+  display: flex;
+  gap: 1rem;
+`;
+
+const Button = styled.button`
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  
+  &.primary {
+    background: #333;
+    color: white;
+  }
+  
+  &.secondary {
+    background: transparent;
+    border: 1px solid #333;
+    color: white;
+  }
+`;
 
 export default function Home() {
   return (
-    <div
-      className={`${geistSans.variable} ${geistMono.variable} grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
-    >
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              pages/index.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+    <>
+      <Navbar />
+      <HeroSection>
+        <HeroImage />
+      </HeroSection>
+      <CardWrapper>
+        <Swiper
+          modules={[Navigation, Pagination, EffectCards]}
+          effect="cards"
+          grabCursor={true}
+          navigation
+          pagination={{ clickable: true }}
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+          <AnimatePresence>
+            {cardData.map((card) => (
+              <SwiperSlide key={card.id}>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <CardContainer>
+                    <CardContent>
+                      <div>
+                        <CardTitle>{card.title}</CardTitle>
+                        <CardText>{card.content}</CardText>
+                      </div>
+                    </CardContent>
+                  </CardContainer>
+                </motion.div>
+              </SwiperSlide>
+            ))}
+          </AnimatePresence>
+        </Swiper>
+      </CardWrapper>
+    </>
   );
 }
