@@ -23,7 +23,7 @@ const HeroSection = styled.div`
 const HeroImage = styled.div`
   width: 100%;
   height: 100%;
-  background-image: url('/sunny-lake.jpg');
+  background-image: url('/house-image.jpg');
   background-size: cover;
   background-position: center;
   position: relative;
