@@ -1,9 +1,7 @@
 'use client'
 import styled from 'styled-components';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, EffectCards } from 'swiper/modules';
-import { motion, AnimatePresence } from 'framer-motion';
-import { CardWrapper, CardContainer, CardContent, CardTitle, CardText } from '../styles/CardStyles';
+import { motion } from 'framer-motion';
+import { CardWrapper, CardContainer, CardContent, CardTitle, CardText, CardGrid } from '../styles/CardStyles';
 import Navbar from '../components/Navbar';
 
 // Swiper 스타일
@@ -17,7 +15,7 @@ const HeroSection = styled.div`
   width: 100%;
   height: 33vh;
   position: relative;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 `;
 
 const HeroImage = styled.div`
@@ -42,16 +40,64 @@ const HeroText = styled.div`
 const cardData = [
   {
     id: 1,
-    title: "오늘의 뉴스",
-    content: "첫 번째 카드 뉴스 내용입니다.",
-    image: "/images/news1.jpg"
+    title: "브랜드 전략",
+    content: "효과적인 브랜드 전략 수립 및 실행 방안",
+    image: "https://images.unsplash.com/photo-1557426272-fc759fdf7a8d?q=80"
   },
   {
     id: 2,
-    title: "주간 하이라이트",
-    content: "두 번째 카드 뉴스 내용입니다.",
-    image: "/images/news2.jpg"
+    title: "디지털 마케팅",
+    content: "온라인 마케팅 전략 및 실행 방안",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80"
   },
+  {
+    id: 3,
+    title: "콘텐츠 제작",
+    content: "매력적인 콘텐츠 기획 및 제작",
+    image: "https://images.unsplash.com/photo-1542744094-3a31f272c490?q=80"
+  },
+  {
+    id: 4,
+    title: "소셜 미디어",
+    content: "소셜 미디어 운영 및 관리 전략",
+    image: "https://images.unsplash.com/photo-1562577309-4932fdd64cd1?q=80"
+  },
+  {
+    id: 5,
+    title: "광고 캠페인",
+    content: "효과적인 광고 캠페인 기획 및 실행",
+    image: "https://images.unsplash.com/photo-1551434678-e076c223a692?q=80"
+  },
+  {
+    id: 6,
+    title: "데이터 분석",
+    content: "마케팅 데이터 분석 및 인사이트 도출",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80"
+  },
+  {
+    id: 7,
+    title: "UI/UX 디자인",
+    content: "사용자 중심의 디자인 솔루션",
+    image: "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?q=80"
+  },
+  {
+    id: 8,
+    title: "웹 개발",
+    content: "최신 기술을 활용한 웹 서비스 개발",
+    image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80"
+  },
+  {
+    id: 9,
+    title: "모바일 앱",
+    content: "사용자 친화적인 모바일 앱 개발",
+    image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80"
+  },
+  {
+    id: 10,
+    title: "컨설팅",
+    content: "전문적인 디지털 전환 컨설팅",
+    image: "https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80"
+  }
 ];
 
 const Hero = styled.div`
@@ -115,35 +161,25 @@ export default function Home() {
         <HeroImage />
       </HeroSection>
       <CardWrapper>
-        <Swiper
-          modules={[Navigation, Pagination, EffectCards]}
-          effect="cards"
-          grabCursor={true}
-          navigation
-          pagination={{ clickable: true }}
-        >
-          <AnimatePresence>
-            {cardData.map((card) => (
-              <SwiperSlide key={card.id}>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <CardContainer>
-                    <CardContent>
-                      <div>
-                        <CardTitle>{card.title}</CardTitle>
-                        <CardText>{card.content}</CardText>
-                      </div>
-                    </CardContent>
-                  </CardContainer>
-                </motion.div>
-              </SwiperSlide>
-            ))}
-          </AnimatePresence>
-        </Swiper>
+        <CardGrid>
+          {cardData.map((card) => (
+            <motion.div
+              key={card.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: card.id * 0.1 }}
+            >
+              <CardContainer bgImage={card.image}>
+                <CardContent>
+                  <div>
+                    <CardTitle>{card.title}</CardTitle>
+                    <CardText>{card.content}</CardText>
+                  </div>
+                </CardContent>
+              </CardContainer>
+            </motion.div>
+          ))}
+        </CardGrid>
       </CardWrapper>
     </>
   );
