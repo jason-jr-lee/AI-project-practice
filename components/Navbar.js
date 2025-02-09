@@ -1,51 +1,80 @@
 import styled from 'styled-components';
 import Link from 'next/link';
+import { useSession, signOut } from 'next-auth/react';
 
 const Nav = styled.nav`
+  background: white;
   padding: 1rem 2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+`;
+
+const NavContainer = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #000;
 `;
 
-const Logo = styled.div`
+const Logo = styled.h1`
   font-size: 1.5rem;
   font-weight: bold;
+  margin: 0;
+  cursor: pointer;
 `;
 
 const NavLinks = styled.div`
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem;
+  align-items: center;
 `;
 
-const StyledLink = styled(Link)`
-  color: ${props => props.active ? '#ff0000' : '#fff'};
+const NavLink = styled.span`
+  color: #333;
   text-decoration: none;
-  font-weight: 500;
+  cursor: pointer;
+  
+  &:hover {
+    color: #FF1B6B;
+  }
 `;
 
-const Button = styled.button`
-  background: #fff;
-  color: #000;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
+const LoginButton = styled.button`
+  background: linear-gradient(135deg, #FF1B6B, #45CAFF);
+  color: white;
   border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
   cursor: pointer;
+  font-weight: 500;
+  
+  &:hover {
+    opacity: 0.9;
+  }
 `;
 
 export default function Navbar() {
+  const { data: session } = useSession();
+
   return (
     <Nav>
-      <Logo>Jason's big picture to Rich</Logo>
-      <NavLinks>
-        <StyledLink href="/" active="true">HOME</StyledLink>
-        <StyledLink href="/demos">DEMOS</StyledLink>
-        <StyledLink href="/inner-pages">INNER PAGES</StyledLink>
-        <StyledLink href="/utility-pages">UTILITY PAGES</StyledLink>
-        <StyledLink href="/authentications">AUTHENTICATIONS</StyledLink>
-      </NavLinks>
-      <Button>BUY THIS TEMPLATE</Button>
+      <NavContainer>
+        <Link href="/">
+          <Logo>My Next App</Logo>
+        </Link>
+        <NavLinks>
+          {session ? (
+            <>
+              <NavLink>{session.user.name}</NavLink>
+              <LoginButton onClick={() => signOut()}>로그아웃</LoginButton>
+            </>
+          ) : (
+            <Link href="/login">
+              <LoginButton as="span">로그인</LoginButton>
+            </Link>
+          )}
+        </NavLinks>
+      </NavContainer>
     </Nav>
   );
 }

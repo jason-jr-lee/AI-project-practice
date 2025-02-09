@@ -169,7 +169,7 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: card.id * 0.1 }}
             >
-              <CardContainer bgImage={card.image}>
+              <CardContainer $bgImage={card.image}>
                 <CardContent>
                   <div>
                     <CardTitle>{card.title}</CardTitle>

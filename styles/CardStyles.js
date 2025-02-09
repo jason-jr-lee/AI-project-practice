@@ -20,7 +20,7 @@ export const CardContainer = styled.div`
   transition: transform 0.3s ease;
   cursor: pointer;
   height: 250px;
-  background-image: ${props => `url(${props.bgImage})`};
+  background-image: ${props => `url(${props.$bgImage})`};
   background-size: cover;
   background-position: center;
 
